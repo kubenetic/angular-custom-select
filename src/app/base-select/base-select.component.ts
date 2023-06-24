@@ -1,19 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {SelectItem} from "../../model/select-item.model";
 import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-base-select',
   templateUrl: './base-select.component.html',
-  styleUrls: ['./base-select.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: BaseSelectComponent,
-      multi: true,
-    }
-  ]
+  styleUrls: ['./base-select.component.scss']
 })
 export class BaseSelectComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
@@ -23,8 +16,10 @@ export class BaseSelectComponent implements ControlValueAccessor, OnInit, OnDest
   onChange = (value: string) => {
   };
 
-  isDisabled = false;
+  isDisabled = true;
   isLoading = false;
+  touched = false;
+
   label?: string;
   multiple = false;
   options!: Array<SelectItem>;
@@ -42,11 +37,7 @@ export class BaseSelectComponent implements ControlValueAccessor, OnInit, OnDest
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-  }
-
-  writeValue(value: any): void {
+  writeValue(value: string): void {
     this.value = value;
   }
 
@@ -72,4 +63,7 @@ export class BaseSelectComponent implements ControlValueAccessor, OnInit, OnDest
     this.dataSubscription?.unsubscribe();
   }
 
+  onValueChange(value: string) {
+    this.onChange(value);
+  }
 }
