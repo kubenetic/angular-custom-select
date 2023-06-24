@@ -1,12 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ControlValueAccessor} from "@angular/forms";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {SelectItem} from "../../model/select-item.model";
 import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-base-select',
   templateUrl: './base-select.component.html',
-  styleUrls: ['./base-select.component.scss']
+  styleUrls: ['./base-select.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: BaseSelectComponent,
+      multi: true,
+    }
+  ]
 })
 export class BaseSelectComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
