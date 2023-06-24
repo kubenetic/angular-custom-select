@@ -3,10 +3,11 @@
 
   <mat-form-field style="width: 100%;">
     <mat-label *ngIf="label">{{ label }}</mat-label>
-    <mat-select [disabled]="isDisabled">
+    <mat-select [disabled]="isDisabled" [multiple]="multiple">
       <mat-option
         *ngFor="let option of options"
-        [value]="option.key">{{ option.value }}>
+        [value]="option.key">
+        {{ option.value }}
       </mat-option>
     </mat-select>
     <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
