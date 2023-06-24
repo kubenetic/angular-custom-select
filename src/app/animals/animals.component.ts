@@ -1,10 +1,28 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BaseSelectComponent} from "../base-select/base-select.component";
+import {AnimalService} from "./animal.service";
 
 @Component({
   selector: 'app-animals',
-  templateUrl: './animals.component.html',
-  styleUrls: ['./animals.component.scss']
+  templateUrl: '../base-select/base-select.component.html',
+  styleUrls: ['../base-select/base-select.component.scss'],
+  providers: [
+    {
+      provide: AnimalService
+    }
+  ]
 })
-export class AnimalsComponent {
+export class AnimalsComponent extends BaseSelectComponent implements OnInit {
 
+  override label: string = 'Animals';
+
+  constructor(private animalService: AnimalService) {
+    super();
+  }
+
+  override ngOnInit() {
+    this.dataInitializerFn = this.animalService.fetchAnimals;
+
+    super.ngOnInit();
+  }
 }
