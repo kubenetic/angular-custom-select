@@ -1,2 +1,47 @@
-<app-animals></app-animals>
-<app-fruits></app-fruits>
+<main>
+    <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+      <fieldset>
+        <legend>Personal data</legend>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input type="text" formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+            <input type="number" formControlName="age" matInput>
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset formArrayName="animals">
+        <legend>My favorite animals</legend>
+        <mat-icon (click)="addAnimal()">add_circle</mat-icon>
+
+        <span *ngIf="animalsArray.length === 0">Add your favorite animals</span>
+        <ng-container *ngIf="animalsArray.length > 0">
+          <app-animals
+            *ngFor="let _ of animalsArray.controls; let i = index;"
+            [formControlName]="i"></app-animals>
+        </ng-container>
+      </fieldset>
+
+      <fieldset formArrayName="fruits">
+        <legend>My favorite fruits</legend>
+        <mat-icon (click)="addFruit()">add_circle</mat-icon>
+
+        <span *ngIf="fruitsArray.length === 0">Add your favorite fruits</span>
+        <ng-container *ngIf="fruitsArray.length > 0">
+          <app-fruits
+            *ngFor="let _ of fruitsArray.controls; let i = index;"
+            [formControlName]="i"></app-fruits>
+        </ng-container>
+      </fieldset>
+
+      <button mat-raised-button color="primary" type="submit">Send</button>
+    </form>
+</main>
